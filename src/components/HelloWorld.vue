@@ -1,58 +1,133 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div>
+    <!-- <h6 class="user">ref : {{ users }}</h6> -->
+    <!-- <h6 class="user">reactive : {{ reactiveUser.name }}</h6> -->
+    <!-- <h6 class="user">ref : {{ user.name }}</h6> -->
+
+    <!--
+    <h6 class="user">Computed : {{ computedData }}</h6>
+    -->
+    <h6 class="user">Watch : {{ watchData }}</h6>
+    <!-- <input type="text" placeholder="enter name" v-model="compUser" /> -->
+    <!-- <h1>{{ userFirstName }}</h1> -->
+    <input type="text" placeholder="first name" v-model="firstName" />
+    <input type="text" placeholder="last name" ref="userLastName" />
+    <button @click="setName">Methods : SetName</button>
+    <user-data
+      :firstName="firstName"
+      :lastName="user.name"
+      :userAge="user.age"
+    />
   </div>
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
-}
-</script>
+import { ref, reactive, watch, computed, provide } from 'vue';
+import UserData from './UserData.vue';
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+export default {
+  name: 'Mentlu Code',
+  components: {
+    'user-data': UserData,
+  },
+  props: [],
+  setup() {
+    // 'this' keyword cannot be used in setup
+    console.log(' chaithra setup created');
+    const users = ref(['chaithra', 'chaitanya']);
+    const user = ref({
+      name: 'thanu',
+      age: -2,
+    });
+
+    const firstName = ref('');
+    // template ref
+    const userLastName = ref(null);
+
+    //computed
+    const compUser = ref('');
+
+    // watch
+    const watchData = ref('thanu');
+
+    // reactive
+
+    const reactiveUser = reactive({
+      name: 'thanu',
+      age: 27,
+    });
+    console.log('ref value', users.value);
+
+    //provide
+    provide('user-age', user);
+    // setTimeout(() => {
+    //   users.value = users.value.map((value) => value + ' loose');
+
+    //   //reactiveUser
+    //   reactiveUser.name = reactiveUser.name + ' mentlu';
+    //   reactiveUser.age = 28;
+
+    //   // refUser
+    //   user.value.name = user.value.name + ' Hahaha';
+    // }, 2000);
+
+    // const computedValue: computed(()=>{
+    //   return reactiveUser.
+
+    // })
+
+    // watch;
+    watch(reactiveUser.name, function (newValue, oldValue) {
+      console.log('old value', oldValue);
+      console.log('new value', newValue);
+    });
+
+    //methods
+
+    function setName() {
+      console.log('clicked');
+      user.value.name = userLastName.value.value;
+      // reactiveUser.name = 'chaithra';
+
+      console.log('data', userLastName.value);
+      watchData.value = userLastName.value.value;
+      // userFirstName.value = {
+      //   innerHTML: 'Hi mentlu',
+      //   nodeType: 1,
+      //   tagName: 'h1',
+      // };
+      // console.log('userFirstName.value', userFirstName.value);
+    }
+    // function setOnChange(event) {
+    //   compUser.value = event.target.value;
+    // }
+
+    // computed
+    // computed properties are read only.. cannot able to overwrite the value
+
+    const computedData = computed(function () {
+      return compUser.value;
+    });
+    console.log('userdata', computedData);
+
+    // setup return
+    return {
+      firstName,
+      users,
+      reactiveUser,
+      user,
+      setName,
+      compUser,
+      computedData,
+      watchData,
+      userLastName,
+    };
+  },
+};
+</script>
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.user {
+  background-color: white;
+  color: blue;
 }
 </style>

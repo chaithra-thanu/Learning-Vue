@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <!-- <img alt="Vue logo" src="https://vuejs.org/images/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <h1>Vue</h1>
+    <!-- <img alt="Vue logo" src="https://vuejs.org/images/logo.png"> -->
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- <h1>Vue</h1>
     <input v-model="message" placeholder="add card" />
-    <button>Add card</button>
+    <button>Add card</button> -->
   </div>
 </template>
 
@@ -17,13 +17,13 @@ export default {
   components: {
     HelloWorld,
   },
-  setup() {
-    const message = ref('data');
-    console.log(isRef(message.value));
-    return {
-      message,
-    };
-  },
+  // setup() {
+  //   const message = ref('data');
+  //   console.log(isRef(message.value));
+  //   return {
+  //     message,
+  //   };
+  // },
 };
 </script>
 
