@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- <img alt="Vue logo" src="https://vuejs.org/images/logo.png"> -->
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <CompositionApi msg="Welcome to Your Vue.js App" />
     <!-- <h1>Vue</h1>
     <input v-model="message" placeholder="add card" />
     <button>Add card</button> -->
@@ -9,13 +9,13 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import CompositionApi from './components/CompositionApi.vue';
 import { ref, isRef, isReactive } from 'vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    CompositionApi,
   },
   // setup() {
   //   const message = ref('data');
